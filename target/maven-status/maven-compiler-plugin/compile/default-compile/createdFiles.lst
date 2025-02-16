@@ -1,0 +1,4 @@
+com/example/contactcrud/controller/ContactController.class
+com/example/contactcrud/repository/ContactRepository.class
+com/example/contactcrud/model/Contact.class
+com/example/contactcrud/service/ContactService.class

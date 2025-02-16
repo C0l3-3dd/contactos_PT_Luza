@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Prueba tecnica - Contactos -Luza</title>
+</h:head>
+
+<h:body>
+
+
+    <p:messages id="msgs" autoUpdate="true" showDetail="true" closable="true" />
+
+    <h:form id="formContact" enctype="multipart/form-data">
+
+        <p:panel header="Formulario de Contacto" style="margin-bottom:20px;">
+            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+
+                <h:outputLabel for="nombre" value="Nombre:" />
+                <p:inputText id="nombre"
+                             value="#{contactController.contact.nombre}"
+                             required="true"
+                             requiredMessage="El nombre es obligatorio" />
+
+                <h:outputLabel for="apellido" value="Apellido:" />
+                <p:inputText id="apellido"
+                             value="#{contactController.contact.apellido}"
+                             required="true"
+                             requiredMessage="El apellido es obligatorio" />
+
+                <h:outputLabel for="telefono" value="Teléfono:" />
+                <p:inputMask id="telefono"
+                             value="#{contactController.contact.telefono}"
+                             required="true"
+                             requiredMessage="El teléfono es obligatorio"
+                             mask="(999)999-9999" />
+
+                <h:outputLabel for="correo" value="Correo:" />
+                <p:inputText id="correo"
+                             value="#{contactController.contact.email}"
+                             required="true"
+                             requiredMessage="El correo es obligatorio">
+
+                    <f:validateRegex 
+                        pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+(\.[A-Za-z]{2,})+$"
+                        message="Formato de correo inválido." />
+                </p:inputText>
+
+                <h:outputLabel for="direccion" value="Dirección:" />
+                <p:inputText id="direccion"
+                             value="#{contactController.contact.direccion}" />
+
+                <h:outputLabel value="Fotografía:" />
+                <p:fileUpload value="#{contactController.uploadedFile}"
+                              mode="simple"
+                              accept="image/png"
+                              label="Seleccionar Foto" />
+
+                <p:commandButton value="Agregar"
+                                 actionListener="#{contactController.save}"
+                                 ajax="false" 
+                                 update="@form,:msgs,:formSearch:contactsTable"
+                                 icon="pi pi-check"
+                                 disabled="#{contactController.editMode}" />
+
+                <p:commandButton value="Actualizar"
+                                 actionListener="#{contactController.update}"
+                                 update="@form,:msgs,:formSearch:contactsTable"
+                                 icon="pi pi-refresh"
+                                 disabled="#{not contactController.editMode}" />
+            </div>
+        </p:panel>
+    </h:form>
+
+    <h:form id="formSearch">
+
+        <p:panel header="Búsqueda" style="margin-bottom:20px;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <h:outputLabel for="search" value="Buscar:" />
+                <p:inputText id="search"
+                             style="width: 300px;"
+                             value="#{contactController.searchKeyword}" />
+                <p:commandButton value="Buscar"
+                                 action="#{contactController.searchContacts}"
+                                 update="contactsTable,:msgs"
+                                 icon="pi pi-search" />
+            </div>
+        </p:panel>
+
+        <p:panel header="Lista de Contactos">
+            <p:dataTable var="c"
+                         value="#{contactController.contactList}"
+                         id="contactsTable"
+                         paginator="true"
+                         rows="5">
+
+                <p:column headerText="Foto">
+                    <p:graphicImage value="#{c.streamedFoto}"
+                                    width="50" height="50" />
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{c.nombre}" />
+                </p:column>
+
+                <p:column headerText="Apellido">
+                    <h:outputText value="#{c.apellido}" />
+                </p:column>
+
+                <p:column headerText="Teléfono">
+                    <h:outputText value="#{c.telefono}" />
+                </p:column>
+
+                <p:column headerText="Correo">
+                    <h:outputText value="#{c.email}" />
+                </p:column>
+
+                <p:column headerText="Dirección">
+                    <h:outputText value="#{c.direccion}" />
+                </p:column>
+
+                <p:column headerText="Acciones">
+                    <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <p:commandButton value="Editar"
+                                         actionListener="#{contactController.edit(c.id)}"
+                                         update=":formContact,:msgs"
+                                         icon="pi pi-pencil" />
+
+                        <p:commandButton value="Eliminar"
+                                         actionListener="#{contactController.delete(c)}"
+                                         update="contactsTable,:msgs,:formContact"
+                                         icon="pi pi-times" />
+                    </div>
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Lista de Contactos</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:panel header="Buscar Contactos">
+            <p:inputText value="#{contactController.searchKeyword}" />
+            <p:commandButton value="Buscar" action="#{contactController.searchContacts}" update="contactsTable" />
+        </p:panel>
+
+        <p:commandButton value="Crear Nuevo Contacto" action="createContact.xhtml?faces-redirect=true" />
+
+        <p:dataTable var="c" value="#{contactController.contactList}" 
+                     id="contactsTable" paginator="true" rows="5">
+            <p:column headerText="ID">
+                <h:outputText value="#{c.id}" />
+            </p:column>
+            <p:column headerText="Nombre">
+                <h:outputText value="#{c.nombre}" />
+            </p:column>
+            <p:column headerText="Apellido">
+                <h:outputText value="#{c.apellido}" />
+            </p:column>
+            <p:column headerText="Teléfono">
+                <h:outputText value="#{c.telefono}" />
+            </p:column>
+            <p:column headerText="Correo">
+                <h:outputText value="#{c.correoElectronico}" />
+            </p:column>
+            <p:column headerText="Acciones">
+                <p:commandButton value="Editar" 
+                                 action="#{contactController.edit(c.id)}" 
+                                 update="@form" />
+                <p:commandButton value="Eliminar" 
+                                 actionListener="#{contactController.delete(c)}" 
+                                 update="contactsTable" 
+                                 oncomplete="PF('deleteDialog').show()" />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>
