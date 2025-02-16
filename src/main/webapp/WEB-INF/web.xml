@@ -6,55 +6,38 @@
          version="3.1">
 
     <context-param>
-    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-    <param-value>client</param-value>
-</context-param>
-
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
     <context-param>
-    <param-name>org.apache.myfaces.RESOURCE_VIRTUAL_PATH</param-name>
-    <param-value>/javax.faces.resource</param-value>
-</context-param>
-
-<session-config>
-    <session-timeout>30</session-timeout> <!-- en minutos -->
-</session-config>
-
-       <!-- Deshabilitar por completo la inyección CDI en Mojarra -->
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
     <context-param>
-        <param-name>com.sun.faces.enableCdiResolverChain</param-name>
-        <param-value>false</param-value>
+        <param-name>org.apache.myfaces.RESOURCE_VIRTUAL_PATH</param-name>
+        <param-value>/javax.faces.resource</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>com.sun.faces.implicitCdiEnabled</param-name>
-        <param-value>false</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>com.sun.faces.injectionProvider</param-name>
-        <param-value>com.sun.faces.vendor.NoneInjectionProvider</param-value>
-    </context-param>
-    
-    <!-- Spring: Indica dónde está applicationContext.xml -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
-    <!-- Listener de Spring para cargar el contexto -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- JSF Config -->
     <context-param>
-        <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-name>com.sun.faces.enableCdiResolverChain</param-name>
+        <param-value>false</param-value>
     </context-param>
-
     <context-param>
-        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
-        <param-value>true</param-value>
+        <param-name>com.sun.faces.implicitCdiEnabled</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.injectionProvider</param-name>
+        <param-value>com.sun.faces.vendor.NoneInjectionProvider</param-value>
     </context-param>
 
     <servlet>
@@ -62,10 +45,12 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>FacesServlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>
