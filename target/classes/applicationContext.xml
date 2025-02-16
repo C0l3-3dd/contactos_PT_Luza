@@ -11,10 +11,13 @@
           http://www.springframework.org/schema/tx
           https://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!-- Escaneo de componentes si usas @Component, @Service, etc. -->
     <context:component-scan base-package="com.example.contactcrud" />
 
+    <!-- Habilitar transacciones con @Transactional -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
+    <!-- (1) DataSource con variables de entorno -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
         <property name="url"
@@ -26,15 +29,38 @@
         <property name="password" value="#{ systemEnvironment['MYSQLPASSWORD'] }" />
     </bean>
 
+    <!-- (2) LocalContainerEntityManagerFactoryBean -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!-- Inyecta el DataSource -->
         <property name="dataSource" ref="dataSource" />
+
+        <!-- Nombre de la persistence-unit (en persistence.xml) -->
         <property name="persistenceUnitName" value="ContactPU" />
 
+        <!-- jpaVendorAdapter: le indica a Spring que use Hibernate -->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
 
+        <!-- (Opcional) packagesToScan, si no enumeras las entidades en persistence.xml
+        <property name="packagesToScan" value="com.example.contactcrud.model" />
+        -->
+
+        <!-- (Opcional) Config extra:
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        -->
     </bean>
 
+    <!-- (3) Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
 
 </beans>
+
