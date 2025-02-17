@@ -20,7 +20,7 @@
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://sql.freedb.tech:3306/freedb_contact_db?serverTimezone=UTC&amp;allowPublicKeyRetrieval=true&amp;useSSL=false" />
         <property name="username" value="freedb_rootEdd" />
-        <property name="password" alue="UAnABkhNrm!7gTd" />
+        <property name="password" value="UAnABkhNrm!7gTd" />
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
