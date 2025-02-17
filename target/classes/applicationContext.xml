@@ -20,7 +20,7 @@
         <!-- Driver de PostgreSQL -->
         <property name="driverClassName" value="org.postgresql.Driver" />
         <property name="url" 
-            value="jdbc:postgresql://dpg-cupb32lds78s738s8790-a.oregon-postgres.render.com:5432/contact_db_vbyd?sslmode=disable" />
+            value="jdbc:postgresql://dpg-cupb32lds78s738s8790-a.oregon-postgres.render.com:5432/contact_db_vbyd?sslmode=require" />
 
         <property name="username" value="contact_db_vbyd_user" />
         <property name="password" value="WvaOakMr64WU0D5sOOh8SzZf3KtVCc0L" />
