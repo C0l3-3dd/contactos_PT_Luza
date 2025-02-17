@@ -10,7 +10,7 @@
         
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql.freedb.tech:3306/freedb_contact_db?serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql.freedb.tech:3306/freedb_contact_db?serverTimezone=UTC&amp;allowPublicKeyRetrieval=true&amp;useSSL=false" />
             <property name="javax.persistence.jdbc.user" value="freedb_rootEdd" />
             <property name="javax.persistence.jdbc.password" value="UAnABkhNrm!7gTd" />
 
